@@ -2,49 +2,24 @@
 
 # A simple shell script to install my dotfiles and setup some basics for my system.
 
-set SOURCE "https://github.com/NovaFoundSaturn/dotfiles.git"
+git clone https://github.com/NovaFoundSaturn/dotfiles.git
 
-begin
-    cd ~/Projects/
-    git clone $SOURCE
-end
+mkdir ~/Projects
+mkdir ~/Pictures
+rm ~/.config/fish/config.fish
 
-set PACKAGES \
-niri \
-noctalia \
-sddm \
-nautilus \
-ghostty \
-ghostty-nautilus \
-zen-browser-bin \
-github-cli \
-gnome-disk-utility \
-adw-gtk-theme \
-brightnessctl \
-capitain-cursors \
-xwayland-satellite \
-cachyos-gaming-meta \
-steam \
-discord \
-#END PKGS
+mv ./dotfiles ~/Projects/
 
 # Update and Install new packages
-sudo pacman -Syu
-sudo pacman -S --needed $PACKAGES 
+sudo pacman -Syu niri noctalia sddm nautilus ghostty ghostty-nautilus zen-browser-bin github-cli gnome-disk-utility adw-gtk-theme brightnessctl capitaine-cursors xwayland-satellite cachyos-gaming-meta steam discord 
 
 # Enable display manager
 sudo systemctl enable sddm
-
-# Create symlinks for dotfiles
-sudo rm -r ~/.config/{fastfetch,niri,noctalia,fish,ghostty}
 
 ln -s ~/Projects/dotfiles/.vimrc ~/
 ln -s ~/Projects/dotfiles/fastfetch ~/.config
 ln -s ~/Projects/dotfiles/niri ~/.config
 ln -s ~/Projects/dotfiles/noctalia ~/.config
-ln -s ~/Projects/dotfiles/fish/config.fish ~/.config/fish
+ln -s ~/Projects/dotfiles/fish/config.fish ~/.config/fish/
 ln -s ~/Projects/dotfiles/ghostty ~/.config
 ln -s ~/Projects/dotfiles/wallpapers ~/Pictures/Wallpapers
-
-# Tell user to Reboot system 
-echo "Please Reboot the system."
