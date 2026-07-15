@@ -12,6 +12,7 @@ mv ./dotfiles ~/Projects/
 
 # Update and Install new packages
 sudo pacman -Syu niri noctalia sddm nautilus ghostty ghostty-nautilus zen-browser-bin github-cli gnome-disk-utility adw-gtk-theme brightnessctl capitaine-cursors xwayland-satellite cachyos-gaming-meta steam discord 
+###!!! THERE IS CURRENTLY SOMETHING IN THE CACHYOS NOCTALIA NIRI PACKAGE THAT FIXES DISCORD STREAMING, Idk what does it exactly
 
 # Enable display manager
 sudo systemctl enable sddm
