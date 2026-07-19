@@ -23,9 +23,9 @@ discord \
 helix \
 libreoffice-fresh \
 gnome-calculator \
-proton-vpn-gtk-app 
 ###!!! THERE IS CURRENTLY SOMETHING IN THE CACHYOS NOCTALIA NIRI PACKAGE THAT FIXES DISCORD STREAMING, Idk what does it exactly
 
+echo "Setting Up dotfiles..."
 git clone https://github.com/NovaFoundSaturn/dotfiles.git
 
 mkdir ~/Projects
@@ -43,8 +43,12 @@ ln -s ~/Projects/dotfiles/ghostty ~/.config
 ln -s ~/Projects/dotfiles/wallpapers ~/Pictures/Wallpapers
 ln -s ~/Projects/dotfiles/helix ~/.config/
 
+echo "Update and Install Pkgs..."
 # Update and Install new packages
 sudo pacman -Syu $pkgs
 
 # Enable display manager
+echo "Enabling Display Manager..."
 sudo systemctl enable sddm
+
+echo "!Finished, Please Restart!"
