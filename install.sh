@@ -1,54 +1,84 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
 
-# A simple shell script to install my dotfiles and setup some basics for my system.
+set -e
 
-set pkgs \
-niri \
-noctalia \
-sddm \
-nautilus \
-ghostty \
-ghostty-nautilus \
-zen-browser-bin \
-github-cli \
-github-desktop \
-gnome-disk-utility \
-adw-gtk-theme \
-brightnessctl \
-capitaine-cursors \
-xwayland-satellite \
-cachyos-gaming-meta \
-steam \
-discord \
-helix \
-libreoffice-fresh \
-gnome-calculator \
-###!!! THERE IS CURRENTLY SOMETHING IN THE CACHYOS NOCTALIA NIRI PACKAGE THAT FIXES DISCORD STREAMING, Idk what does it exactly
+pkgs=(
+    # Desktop
+    niri
+    noctalia
+    sddm
+    adw-gtk-theme
+    brightnessctl
+    capitaine-cursors
+    xwayland-satellite
 
-echo "Setting Up dotfiles..."
-git clone https://github.com/NovaFoundSaturn/dotfiles.git
+    # Desktop Applications
+    nautilus
+    ghostty
+    ghostty-nautilus
+    zen-browser-bin
+    gnome-disk-utility
+    gnome-calculator
+    libreoffice-fresh
 
-mkdir ~/Projects
-mkdir ~/Pictures
-rm ~/.config/fish/config.fish
+    # Dev Tools
+    github-cli
+    github-desktop
+    helix
+    qemu-full
+    virt-manager
 
-mv ./dotfiles ~/Projects/
+    # Gaming
+    cachyos-gaming-meta
+    steam
+    discord
+)
 
-ln -s ~/Projects/dotfiles/.vimrc ~/
-ln -s ~/Projects/dotfiles/fastfetch ~/.config
-ln -s ~/Projects/dotfiles/niri ~/.config
-ln -s ~/Projects/dotfiles/noctalia ~/.config
-ln -s ~/Projects/dotfiles/fish/config.fish ~/.config/fish/
-ln -s ~/Projects/dotfiles/ghostty ~/.config
-ln -s ~/Projects/dotfiles/wallpapers ~/Pictures/Wallpapers
-ln -s ~/Projects/dotfiles/helix ~/.config/
+setup_dotfiles() {
+    echo "Setting up dotfiles..."
 
-echo "Update and Install Pkgs..."
-# Update and Install new packages
-sudo pacman -Syu $pkgs
+    git clone https://github.com/NovaFoundSaturn/dotfiles.git
 
-# Enable display manager
-echo "Enabling Display Manager..."
-sudo systemctl enable sddm
+    mkdir -p ~/Projects
+    mkdir -p ~/Pictures
+    mkdir -p ~/.config/fish
 
-echo "!Finished, Please Restart!"
+    rm -f ~/.config/fish/config.fish
+
+    mv ./dotfiles ~/Projects/
+
+    ln -s ~/Projects/dotfiles/.vimrc ~/
+    ln -s ~/Projects/dotfiles/fastfetch ~/.config
+    ln -s ~/Projects/dotfiles/niri ~/.config
+    ln -s ~/Projects/dotfiles/noctalia ~/.config
+    ln -s ~/Projects/dotfiles/fish/config.fish ~/.config/fish/
+    ln -s ~/Projects/dotfiles/ghostty ~/.config
+    ln -s ~/Projects/dotfiles/wallpapers ~/Pictures/Wallpapers
+    ln -s ~/Projects/dotfiles/helix ~/.config/
+}
+
+install_packages() {
+    echo "Updating system and installing packages..."
+
+    sudo pacman -Syu "${pkgs[@]}"
+}
+
+enable_services() {
+    echo "Adding user Groups"
+    sudo usermod -aG libvirt $USER
+
+    echo "Enabling Display Manager..."
+
+    sudo systemctl enable sddm
+    sudo systemctl enable libvirtd
+}
+
+main() {
+    setup_dotfiles
+    install_packages
+    enable_services
+    echo
+    echo "Finished! Please restart."
+}
+
+main "$@"
