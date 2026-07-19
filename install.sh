@@ -190,6 +190,8 @@ setup_system() {
             echo "Skipping missing service: $service"
         fi
     done
+
+    sudo echo 'firewall_backend = "iptables"' | sudo tee -a /etc/libvirt/network.conf
 }
 
 
