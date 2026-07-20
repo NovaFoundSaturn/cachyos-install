@@ -19,7 +19,7 @@ DOTFILES_REPO="https://github.com/NovaFoundSaturn/dotfiles.git"
 DOTFILES_DIR="$HOME/Projects/dotfiles"
 
 declare -A PKG_GROUPS=(
-    [niri]="niri noctalia sddm adw-gtk-theme brightnessctl capitaine-cursors xwayland-satellite nautilus ghostty ghostty-nautilus zen-browser-bin gnome-disk-utility gnome-calculator libreoffice-fresh"
+    [niri]="niri noctalia sddm adw-gtk-theme brightnessctl capitaine-cursors xwayland-satellite nautilus ghostty ghostty-nautilus zen-browser-bin obsidian gnome-disk-utility gnome-calculator libreoffice-fresh spotify-launcher"
     [dev]="github-desktop github-cli helix qemu-full virt-manager"
     [gaming]="steam discord cachyos-gaming-meta"
 )
